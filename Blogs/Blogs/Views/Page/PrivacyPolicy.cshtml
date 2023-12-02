@@ -1,0 +1,48 @@
+﻿@model Blogs.ViewModels.PageVM
+@{
+            ViewData["Title"] = "Privacy";
+
+            string pageThumbnail = "";
+            if (Model.ThumbnailUrl == null)
+            {
+                pageThumbnail = "/blog/assets/img/privacy-bg.jpg";
+            }
+            else
+            {
+                pageThumbnail = "/thumbnails/" + Model.ThumbnailUrl;
+            }
+}
+        <!-- <!-- Page Header-->
+        <header class="masthead" style="background-image: url('@pageThumbnail')">
+            <div class="container position-relative px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <div class="page-heading">
+                    <h1 onmouseover="mouserOver(this)" onmouseout="mouseOut(this)">@Model.Title</h1>
+                    <script>
+                        function mouserOver(element) {
+                            element.style.color = "yellow";
+                        }
+                        function mouseOut(element) {
+                            element.style.color = "white"
+                        }
+                    </script>
+                            <span class="subheading">@Model.ShortDescription</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+
+
+
+        <main class="mb-4">
+            <div class="container px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        @Html.Raw(Model.Description)
+                    </div>
+                </div>
+            </div>
+        </main>

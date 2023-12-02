@@ -1,0 +1,113 @@
+﻿@model Blogs.ViewModels.PageVM
+
+@{
+    ViewData["Title"] = "Contact";
+
+    string pageThumbnail = "";
+    if (Model.ThumbnailUrl == null)
+    {
+        pageThumbnail = "/blog/assets/img/contact-bg.jpg";
+    }
+    else
+    {
+        pageThumbnail = "/thumbnails/" + Model.ThumbnailUrl;
+    }
+}
+<!-- <!-- Page Header-->
+<header class="masthead" style="background-image: url('@pageThumbnail')">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="page-heading">
+                    <h1 onmouseover="mouserOver(this)" onmouseout="mouseOut(this)">@Model.Title</h1>
+                    <script>
+                        function mouserOver(element) {
+                            element.style.color = "yellow";
+                        }
+                        function mouseOut(element) {
+                            element.style.color = "white"
+                        }
+                    </script>
+                    <span class="subheading">@Model.ShortDescription</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+<main class="mb-4">
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="card-body">
+                    <form name="submit-to-google-sheet">
+                        <div class="mb-2">
+                            <label>Your Name</label>
+                            <input type="text" name="Name"  class="form-control" />
+                            <span  class="text-danger"></span>
+                        </div>
+                        <div class="mb-2">
+                            <label>Your Email</label>
+                            <input type="email" name="Email" class="form-control" />
+                            <span  class="text-danger"></span>
+                        </div><label for="country">Your Country</label>
+                        <select id="country" name="country">
+                            <option value="india">India</option>
+                            <option value="australia">Australia</option>
+                            <option value="canada">Canada</option>
+                            <option value="usa">USA</option>
+                        </select>
+                        <div class="mb-2">
+                            <label>Your Message</label>
+                            <textarea id="richEditor" name="Message" class="form-control" rows="8"></textarea>
+                            <span class="text-danger"></span>
+                        </div>
+                        <div class="mb-2">
+                            <button type="submit" value="Submit" class="btn btn-primary w=100">Submit</button>
+                        </div>
+                        <span id="msg1" style="
+    color: #61b752;
+    margin-top: 10px;
+    display: block;
+"></span>
+                    </form>
+                    <style>
+                        input[type=text], select, textarea {
+                            width: 100%; /* Full width */
+                            padding: 12px; /* Some padding */
+                            border: 1px solid #ccc; /* Gray border */
+                            border-radius: 4px; /* Rounded borders */
+                            box-sizing: border-box; /* Make sure that padding and width stays in place */
+                            margin-top: 6px; /* Add a top margin */
+                            margin-bottom: 16px; /* Bottom margin */
+                            resize: vertical /* Allow the user to vertically resize the textarea (not horizontally) */
+                        }
+                    </style>
+                    <script>
+                        const scriptURL = 'https://script.google.com/macros/s/AKfycbyhi5uyDMzZZEXnmzfdoVlpYV5elQdJFuBSCqGrz_chOevM9vbSeNCtx0AahRumQIm-/exec'
+                        const form = document.forms['submit-to-google-sheet']
+                        const msg = document.getElementById("msg1")
+
+
+                        form.addEventListener('submit', e => {
+                            e.preventDefault()
+                            fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+                                .then(response => {
+                                    msg1.innerHTML = "Message Sent Successfully"
+                                    setTimeout(function () {
+                                        msg.innerHTML = ""
+                                    }, 1000)
+                                    form.reset()
+
+                                })
+                                .catch(error => console.error('Error!', error.message))
+                        })
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
